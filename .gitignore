@@ -1,0 +1,12 @@
+.DS_Store
+node_modules/
+
+npm-debug.log
+.idea
+.project
+.zip
+bin
+obj
+node_modules
+.suo
+.vs
