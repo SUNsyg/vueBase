@@ -6,28 +6,31 @@
 </head>
 <body>
 <div id="app">
+  <a :href="url">12132</a>
+  <div @click="click1">
+    <div @click.stop="click2">click me</div>
+  </div>
 </div>
 <script src="js/vue.js"></script>
 <script>
-  var data = {
-    a: 1
-  }
   var vm = new Vue({
     el: '#app',
     // 选项
-    data: data
-  })
-  data.b = '1'
-
-  new Vue({
     data: {
-      a: 1
+      a: 1,
+      url: 'https://www.baidu.com/'
     },
-    created: function() {
-
+    methods: {
+      click1() {
+        console.log('111')
+      },
+      click2() {
+        console.log('222')
+      }
     }
   })
 //   模版语法
+
 
 </script>
 </body>

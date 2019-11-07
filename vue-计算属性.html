@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vue计算属性</title>
+</head>
+<body>
+<div id="example">
+  <p>Original message: "{{ message }}"</p>
+  <p>Computed reversed message: "{{ reversedMessage }}"</p>
+</div>
+<div id="demo">{{ fullName }}:{{ firstName }} {{ lastName }}</div>
+<script src="js/vue.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#example',
+    data: {
+      message: 'Hello'
+    },
+    computed: {
+      reversedMessage: function() {
+        return this.message.split('').reverse().join('')
+      }
+    }
+  })
+  var vm1 = new Vue({
+    el: '#demo',
+    data: {
+      firstName: 'Foo',
+      lastName: 'Bar',
+      // fullName: ''
+    },
+    // watch: {
+    //   firstName(val) {
+    //     this.fullName = val + this.lastName
+    //   },
+    //   lastName(val) {
+    //     this.fullName =  this.firstName + val
+    //   }
+    // },
+    computed: {
+      // fullName() {
+      //   return this.firstName + ' ' + this.lastName
+      // }
+      fullName: {
+        get() {
+          return this.firstName + ' ' + this.lastName
+        },
+        set(newFullName) {
+          var name = newFullName.split(',')
+          this.firstName = name[0]
+          this.lastName = name[name.length - 1]
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>
