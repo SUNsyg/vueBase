@@ -10,7 +10,17 @@
   <p>Computed reversed message: "{{ reversedMessage }}"</p>
 </div>
 <div id="demo">{{ fullName }}:{{ firstName }} {{ lastName }}</div>
+
+<div id="watch-example">
+  <p>
+    Ask a yes/no question:
+    <input v-model="question"/>
+  </p>
+  <p>{{ answer }}</p>
+</div>
 <script src="js/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
 <script>
   var vm = new Vue({
     el: '#example',
@@ -51,6 +61,18 @@
           this.firstName = name[0]
           this.lastName = name[name.length - 1]
         }
+      }
+    }
+  })
+  var watchExampleVM = new Vue({
+    el: '#watch-example',
+    data: {
+      question: '',
+      answer: 'I cannot give you an answer until you ask a question!'
+    },
+    watch: {
+      question(newV, oldV) {
+        this.answer = 'Waiting for you to stop typing...'
       }
     }
   })
