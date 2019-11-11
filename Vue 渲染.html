@@ -49,6 +49,23 @@
   <h1>v-show：</h1>
   <h1 v-show="ok">Hello!</h1>
 </div>
+<h1>v-for：数组</h1>
+<ul id="example-1">
+  <li v-for="(item, index) of items">
+    {{ parentMessage }} - {{ index }} - {{ item.message }}
+  </li>
+
+  <li v-for="(value, name, index) in object">
+    {{ name }}: {{ value }}: {{index}}
+  </li>
+
+  <li v-for="n in evenNumbers">{{ n }}</li>
+
+  <li v-for="todo in todos" v-if="!todo.isComplete">
+    {{ todo }}
+  </li>
+
+</ul>
 <script src="js/vue.js"></script>
 <script>
 var vm = new Vue({
@@ -65,6 +82,36 @@ var vm = new Vue({
     }
   }
 })
+  var example1 = new Vue({
+    el: '#example-1',
+    data: {
+      parentMessage: 'Parent',
+      items: [
+        {message: 'Foo'},
+        {message: 'Bar'}
+      ],
+      object: {
+        title: 'How to do lists in Vue',
+        author: 'Jane Doe',
+        publishedAt: '2016-04-10'
+      },
+      numbers: [1,2,3,4,5,6],
+      todos: [
+        {isComplete: true, todo: '1'},
+        {isComplete: true, todo: '2'},
+        {isComplete: false, todo: '3'},
+        {isComplete: true, todo: '4'},
+      ]
+    },
+    computed: {
+      evenNumbers() {
+        return this.numbers.filter((number) => {
+          return number % 2 === 0
+        })
+      }
+    }
+  })
+  example1.items.splice(4)
 </script>
 </body>
 </html>

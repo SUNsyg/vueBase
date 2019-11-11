@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue 组件</title>
+</head>
+<body>
+<div id="app">
+  <button-counter></button-counter>
+  <button-counter></button-counter>
+  <button-counter></button-counter>
+</div>
+<div id="blog-posts-events-demo">
+  <div :style="{ fontSize: postFontSize + 'em' }">
+    <blog-post
+            v-on:enlarge-text="onEnlargeText"
+            v-for="post in posts"
+            v-bind:key="post.id"
+            v-bind:post="post"
+    ></blog-post>
+  </div>
+</div>
+<script src="js/vue.js"></script>
+<script>
+  Vue.component('button-counter', {
+    data: function () {
+      return {
+        count: 0
+      }
+    },
+    template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+  })
+  Vue.component('blog-post', {
+    props: ['post'],
+    template: `
+    <div class="blog-post">
+      <h3>{{ post.title }}</h3>
+      <button v-on:click="$emit('enlarge-text', 0.1)">
+        Enlarge text
+      </button>
+      <div v-html="post.content"></div>
+    </div>
+  `
+  })
+  var vm = new Vue({
+    el: '#app'
+  })
+  var vm1 = new Vue({
+    el: '#blog-posts-events-demo',
+    data: {
+      posts: [
+        {id : '1', title: '1111111'},
+        {id : '2', title: '2222222'},
+        {id : '3', title: '3333333'},
+        {id : '4', title: '4444444'},
+      ],
+      postFontSize: 1
+    },
+    methods: {
+      onEnlargeText(enlargeAmount) {
+        this.postFontSize += enlargeAmount
+      }
+    }
+  })
+</script>
+</body>
+</html>
