@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue 生命周期</title>
+</head>
+<body>
+<div id="app">
+  <button v-on:click="counter = !counter">显示组件</button>
+  <keep-alive>
+    <keep-con v-if="counter == 1"></keep-con>
+  </keep-alive>
+</div>
+<script src="js/vue.js"></script>
+<script>
+  Vue.component('keep-con', {
+    data() {
+      return {
+        text: '缓存'
+      }
+    },
+    activated() {
+      console.log('activated',121323);
+    },
+    template: `
+    <div>text</div>
+    `
+  })
+var vm = new Vue({
+  el: '#app',
+  data: {
+    counter: 0,
+
+  },
+  created() {
+    console.log('created',2133);
+  }
+})
+</script>
+</body>
+</html>
