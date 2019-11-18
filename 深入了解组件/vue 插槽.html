@@ -11,6 +11,18 @@
 <div id="app">
   <navigation-link url="/profile"></navigation-link>
   <submit-button>Save</submit-button>
+  <base-layout>
+    <template v-slot:header>
+      <p>I am Header</p>
+    </template>
+
+    <p>I am main</p>
+
+    <template v-slot:footer>
+      <p>I am footer</p>
+    </template>
+
+  </base-layout>
 </div>
 <script src="../js/vue.js"></script>
 <script>
@@ -27,6 +39,21 @@
     <button type="submit">
     <slot>Submit</slot>
 </button>
+    `
+  })
+  Vue.component('base-layout', {
+    template: `
+    <div class="container">
+    <header>
+    <slot name="header"></slot>
+</header>
+    <main>
+    <slot></slot>
+</main>
+    <footer>
+    <slot name="footer"></slot>
+</footer>
+</div>
     `
   })
   var vm = new Vue({
