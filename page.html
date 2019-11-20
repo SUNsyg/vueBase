@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>h5页面</title>
+  <link rel="stylesheet" type="text/css" href="css/index.css" />
+</head>
+<script type="text/javascript">
+  //自适应监测屏幕宽度
+  ; (function (doc, win) {
+    var docEl = doc.documentElement,
+        resizeEvt =
+            'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth
+          if (!clientWidth) return
+          if (clientWidth >= 750) {
+            docEl.style.fontSize = '100px'
+          } else {
+            docEl.style.fontSize = 100 * (clientWidth / 750) + 'px'
+          }
+        }
+
+    if (!doc.addEventListener) return
+    win.addEventListener(resizeEvt, recalc, false)
+    doc.addEventListener('DOMContentLoaded', recalc, false)
+  })(document, window)
+</script>
+<body>
+<div id="main">
+  <header>
+    <a><</a>
+    <span>课程详情</span>
+    <a>
+      <img src="img/icon_back.png" />
+    </a>
+  </header>
+  <div class="container">
+    <div class="bannar">
+      广告图
+    </div>
+    <div class="priceCountdownBox">
+      <div class="priceLeft">
+        <p>
+          <span></span>
+          <del>199</del>
+        </p>
+      </div>
+      <div class="price-right">
+        <p>距结束还剩</p>
+        <p><span>{{day}}</span> 天 <span>{{h}}</span> : <span>{{m}}</span> : <span>{{s}}</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/vue.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#main',
+    data: {
+      day: '1',
+      h: '12',
+      m: '40',
+      s: '20',
+      endDate: 1574416800
+    },
+    created() {
+      this.countDown()
+    },
+    methods: {
+      countDown() {
+        var end = new Date(this.endDate);
+        var nowDate = new Date();
+        var totalSeconds = parseInt((end - nowDate) / 1000)
+        var day = Math.floor(totalSeconds / (60 * 60 * 24));
+        var modulo = totalSeconds % (60 * 60 * 24);
+        var hour = Math.floor(modulo / (60 * 60));
+        modulo = modulo % (60 * 60);
+        var minutes = Math.floor(modulo / 60);
+        var seconds = modulo % (60);
+        this.day = day
+        this.h = hour
+        this.m = minutes
+        this.s = seconds
+      }
+    }
+  })
+</script>
+</body>
+</html>
