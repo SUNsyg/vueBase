@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>进入/离开 & 列表过渡</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+
   <style>
     .fade-enter-active, .fade-leave-active {
       transition: opacity .5s;
@@ -10,7 +14,45 @@
     .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
       opacity: 0;
     }
+
+    .slide-fade-enter-active {
+      transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+      transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to{
+      transform: translateX(10px);
+      opacity: 0;
+    }
+
+    .bounce-enter-active {
+      animation: bounce-in .5s;
+    }
+    .bounce-leave-active {
+      animation: bounce-in .5s reverse;
+    }
+    @keyframes bounce-in {
+      0% {
+        transform: scale(0);
+      }
+      35% {
+        transform: scale(1.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .component-fade-enter-active, .component-fade-leave-active {
+      transition: opacity .3s ease;
+    }
+    .component-fade-enter, .component-fade-leave-to
+       /* .component-fade-leave-active for below version 2.1.8 */ {
+       opacity: 0;
+     }
   </style>
+
 </head>
 <body>
 <div id="demo">
@@ -21,17 +63,131 @@
     <p v-if="show">hello</p>
   </transition>
 </div>
-<div id="example-1">
 
+<div id="example-1">
+  <button @click="show = !show">
+    Toggle render
+  </button>
+  <transition name="slide-fade">
+    <p v-if="show">hello</p>
+  </transition>
 </div>
+
+<div id="example-2">
+  <button @click="show = !show">Toggle show</button>
+  <transition name="bounce">
+    <p v-if="show">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis enim libero, at lacinia diam fermentum id. Pellentesque habitant morbi tristique senectus et netus.</p>
+  </transition>
+</div>
+
+<div id="example-3">
+  <button @click="show = !show">
+    Toggle render
+  </button>
+  <transition
+          name="custom-classes-transition"
+          enter-active-class="animated tada"
+          leave-active-class="animated bounceOutRight"
+  >
+    <p v-if="show">hello</p>
+  </transition>
+</div>
+
+<div id="example-4">
+  <button @click="show = !show">
+    Toggle
+  </button>
+  <transition
+          v-on:before-enter="beforeEnter"
+          v-on:enter="enter"
+          v-on:leave="leave"
+          v-bind:css="false"
+  >
+    <p v-if="show">Demo</p>
+  </transition>
+</div>
+<h1>组件过渡</h1>
+<div id="transition-components-demo">
+  <form>
+    <input type="radio" name="com" checked="checked" /> v-a
+    <input type="checkbox" name="com" /> v-b
+  </form>
+  <transition
+          name="component-fade"
+          mode="out-in"
+  >
+    <component v-bind:is="view"></component>
+  </transition>
+</div>
+
 <script src="../js/vue.js"></script>
 <script>
-new Vue({
+var vm = new Vue({
   el: '#demo',
   data: {
     show: true
   }
 })
+  var vm1 = new Vue({
+    el: '#example-1',
+    data: {
+      show: true
+    }
+  })
+  var vm2 = new Vue({
+    el: '#example-2',
+    data: {
+      show: true
+    }
+  })
+  var vm3 = new Vue({
+    el: '#example-3',
+    data: {
+      show: true
+    }
+  })
+  var vm4 = new Vue({
+    el: '#example-4',
+    data: {
+      show: false
+    },
+    methods: {
+      beforeEnter(el) {
+        el.style.opacity = 0;
+        el.style.transformOrigin = 'left';
+      },
+      enter(el, done) {
+        console.log('enter')
+        Velocity(el, { opacity: 1, fontSize: "1.4rem" }, { duration: 300 })
+        Velocity(el, { fontSize: '1rem' }, { complete: done })
+      },
+      leave(el, done) {
+        Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })
+        Velocity(el, { rotateZ: '100deg' }, { loop: 2 })
+        Velocity(el, {
+          rotateZ: '45deg',
+          translateY: '30px',
+          translateX: '30px',
+          opacity: 0
+        }, { complete: done })
+      }
+    }
+  })
+
+  var vm5 = new Vue({
+    el: '#transition-components-demo',
+    data: {
+      view: 'v-a'
+    },
+    components: {
+      'v-a': {
+        template: '<div>Component A</div>'
+      },
+      'v-b': {
+        template: '<div>Component B</div>'
+      }
+    }
+  })
 </script>
 </body>
 </html>
