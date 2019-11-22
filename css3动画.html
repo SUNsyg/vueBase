@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>css3动画</title>
+  <style>
+    .box {
+      width: 800px;
+      height: 100px;
+      border: 1px solid black;
+    }
+    .ball {
+      width: 50px;
+      height: 50px;
+      /*border-radius: 50%;*/
+      background: lightskyblue;
+      animation: move 2s linear 1s both;
+    }
+    .ball:hover {
+      animation-play-state: paused;
+    }
+    .line {
+      width: 600px;
+      height: 20px;
+      border: 1px solid #000;
+    }
+    .lineColor {
+      height: 20px;
+      background: lightcoral;
+      animation: lineMove 100s calc(var(--percent) * -1s) paused;
+      --percent: 50;
+    }
+    .lineColor:hover {
+      animation-play-state: paused;
+    }
+    @keyframes move {
+      0% {
+        transform: translate3d(200px, 0, 0);
+      }
+      100% {
+        transform: translate3d(500px, 0, 0);
+      }
+    }
+    @keyframes lineMove {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 600px;
+      }
+    }
+  </style>
+</head>
+<body>
+<h1>基础动画</h1>
+<div class="box">
+  <div class="ball"></div>
+</div>
+<div class="line">
+  <div class="lineColor"></div>
+</div>
+<script>
+
+</script>
+</body>
+</html>
