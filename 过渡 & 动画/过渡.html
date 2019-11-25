@@ -51,6 +51,24 @@
        /* .component-fade-leave-active for below version 2.1.8 */ {
        opacity: 0;
      }
+
+    .list-item {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .list-enter-active, .list-leave-active {
+      transition: all 1s;
+    }
+    .list-enter, .list-leave-to {
+      opacity: 0;
+      transform: translate3d(0, 30px, 0);
+    }
+    .list-move {
+      transition: all 1s;
+    }
+    .first-list-move {
+      transition: all 1s;
+    }
   </style>
 
 </head>
@@ -109,8 +127,8 @@
 <h1>组件过渡</h1>
 <div id="transition-components-demo">
   <form>
-    <input type="radio" name="com" checked="checked" /> v-a
-    <input type="checkbox" name="com" /> v-b
+    <input type="radio" name="com" @click="radioChange($event)" checked="checked" value="v-a" /> v-a
+    <input type="radio" name="com" @click="radioChange($event)" value="v-b" /> v-b
   </form>
   <transition
           name="component-fade"
@@ -119,9 +137,50 @@
     <component v-bind:is="view"></component>
   </transition>
 </div>
+<h1>列表过渡</h1>
+<div id="list-demo" class="demo">
+  <button v-on:click="add">Add</button>
+  <button v-on:click="remove">Remove</button>
+  <transition-group name="list" tag="p">
+    <span v-for="item in items" v-bind:key="item" class="list-item">
+      {{item}}
+    </span>
+  </transition-group>
+  <button v-on:click="Shuffle">Shuffle</button>
+  <transition-group name="first-list" tag="p">
+    <span v-for="item in items" v-bind:key="item" class="list-item">
+      {{item}}
+    </span>
+  </transition-group>
+</div>
 
 <script src="../js/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
 <script>
+  var vmList = new Vue({
+    el: '#list-demo',
+    data: {
+      items: [1, 2, 3, 4, 5, 6, 7],
+      nextNum: 10
+    },
+    methods: {
+      randomIndex() {
+        return Math.floor(Math.random() * this.items.length)
+      },
+      add() {
+        this.items.splice(this.randomIndex(), 0, this.nextNum++)
+        this.Shuffle()
+      },
+      remove() {
+        this.items.splice(this.randomIndex(), 1)
+        this.Shuffle()
+      },
+      Shuffle() {
+        this.items = _.shuffle(this.items)
+      }
+    }
+  })
+
 var vm = new Vue({
   el: '#demo',
   data: {
@@ -178,6 +237,11 @@ var vm = new Vue({
     el: '#transition-components-demo',
     data: {
       view: 'v-a'
+    },
+    methods: {
+      radioChange(e) {
+        this.view = e.target.value
+      }
     },
     components: {
       'v-a': {

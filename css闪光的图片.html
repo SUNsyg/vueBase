@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=" utf-8">
+  <meta name="author" content="http://www.softwhy.com/" />
+  <title>蚂蚁部落</title>
+  <style>
+    #img{width:205px;height: 242px;margin:50px auto;position: relative;overflow: hidden;}
+    #img:hover:before{ transition: left 0.7s;/*过渡,改变闪光的位置*/ left: 300px; }
+    #img:before{/*插入闪光*/
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 277px;
+      top: 0;
+      left: -100px;
+      background-image: linear-gradient(to right,rgba(255,255,255,0.2) 0,rgba(255,255,255,.5) 50%,rgba(255,255,255,.2) 100%);/*linear-gradient渐变效果*/
+      transform: skewX(-25deg);/*沿x轴倾斜*/
+    }
+  </style>
+</head>
+<body>
+
+<div id="img" style="cursor: pointer;"><img src="img/bg_price.png" width="205" height="242"></div>
+</body>
+</html>
