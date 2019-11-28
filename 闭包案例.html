@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>闭包案例</title>
+</head>
+<body>
+<script>
+  function Foo() {
+    var stage = []
+    setInterval(() => {
+      debugger
+      this.data = {
+        name: 'wqhwjisqjwo',
+        hobby: {
+          phone: '11'
+        },
+      }
+      stage.push(this.data)
+    })
+  }
+  // const foo = new Foo();
+</script>
+</body>
+</html>
