@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>状态过渡</title>
+  <style>
+
+  </style>
+</head>
+<body>
+<div id="animated-number-demo">
+  <input v-model.number="number" value="0" step="20" />
+  <p>{{ animatedNumber }}</p>
+</div>
+
+<script src="../js/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tween.js@16.3.4"></script>
+<script>
+  var vm = new Vue({
+    el: '#animated-number-demo',
+    data: {
+      number: 0,
+      tweenedNumber: 0
+    },
+    computed: {
+      animatedNumber() {
+        return this.tweenedNumber.toFixed(0);
+      }
+    },
+    watch: {
+      number(n) {
+        TweenLite.to(this.$data, 0.5, { tweenedNumber: n })
+      }
+    }
+  })
+
+
+
+</script>
+</body>
+</html>

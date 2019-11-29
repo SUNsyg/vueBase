@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>自定义指令</title>
+</head>
+<body>
+
+<input v-focus>
+<div v-demo="{ color: 'red', text: 'hello!' }"></div>
+
+<script src="../js/vue.js"></script>
+<script>
+  Vue.directive('focus', {
+    inserted(el) {
+      el.focus()
+    }
+  })
+
+  Vue.directive('demo', function (el, binding) {
+    console.log(binding.value.color) // => "white"
+    console.log(binding.value.text)  // => "hello!"
+  })
+</script>
+</body>
+</html>
