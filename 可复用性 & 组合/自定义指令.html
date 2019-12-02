@@ -6,20 +6,27 @@
 </head>
 <body>
 
-<input v-focus>
-<div v-demo="{ color: 'red', text: 'hello!' }"></div>
+<div id="app" class="demo">
+  <input type="text" placeholder="我是全局自定义指令" v-focus>
+  <input type="text" placeholder="我是局部自定义指令" v-focus2>
+</div>
 
 <script src="../js/vue.js"></script>
 <script>
   Vue.directive('focus', {
-    inserted(el) {
-      el.focus()
+    inserted: function(el) {
+      el.focus();
     }
   })
-
-  Vue.directive('demo', function (el, binding) {
-    console.log(binding.value.color) // => "white"
-    console.log(binding.value.text)  // => "hello!"
+  var vm = new Vue({
+    el: '#app',
+    directives: {
+      focus2: {
+        inserted: function(el) {
+          el.focus()
+        }
+      }
+    }
   })
 </script>
 </body>
