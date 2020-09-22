@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue3.0</title>
+</head>
+<body>
+<div id="app">
+    <ShiSan-component>111</ShiSan-component>
+</div>
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+    import { createApp } from 'vue'
+    const app = createApp({})
+    // 注册一个 options 对象
+    app.component('shisan-component', {
+        /* ... */
+    })
+
+    // 检索注册的组件
+    const ShiSanComponent = app.component('shisan-component')
+</script>
+</body>
+</html>
